@@ -63,7 +63,16 @@ const createAndSavePerson = (done) => {
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  for (let i = 0; i < arrayOfPeople.length; i++) {
+    const personEl = array[i];
+    let Person = new Person(personEl)
+    Person.save((err, data) => {
+      if( err) {
+        return console.error(error)
+      }
+    })
+    done(null, data)
+  }
 };
 
 const findPeopleByName = (personName, done) => {
