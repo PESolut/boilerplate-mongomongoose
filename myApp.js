@@ -1,6 +1,5 @@
-require('dotenv').config();
-
 // dbconfig
+require('dotenv').config();
 const mongoose = require ('mongoose') 
 const URI = process.env.MONGO_URI
 
@@ -28,8 +27,26 @@ class Database {
       });
   }
 }
+module.exports = new Database()
 
-let Person;
+// creating a personSchema with the following shape:
+// a required name field of type Stirng
+// an age field of type Number
+// a favoriteFoods field of type [String]
+
+let personSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  age: {
+    type: Number,
+  },
+  favoriteFoods: {
+    type: Array,
+  }
+})
+let Person = mongoose.model('Person', personSchema)
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
@@ -83,7 +100,7 @@ const queryChain = (done) => {
 /* You completed these challenges, let's go celebrate !
  */
 
-module.exports = new Database()
+
 
 //----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
 
