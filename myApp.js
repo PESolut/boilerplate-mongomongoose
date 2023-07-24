@@ -3,7 +3,31 @@ require('dotenv').config();
 // dbconfig
 const mongoose = require ('mongoose') 
 const URI = process.env.MONGO_URI
-mongoose.connect(`${URI}`, { useNewUrlParser: true, useUnifiedTopology: true})
+
+/*
+
+we have turned our Database class into a singleton 
+by returning an instance of the class in the module.exports 
+statement because we only need a single connection to the database.
+
+*/
+
+class Database {
+  constructor() {
+    this._connect();
+  }
+
+  _connect() {
+    mongoose
+      .connect(`${URI}`, { useNewUrlParser: true, useUnifiedTopology: true})
+      .then(() => {
+        console.log('Database connection successful');
+      })
+      .catch((err) => {
+        console.error('Database connection error');
+      });
+  }
+}
 
 let Person;
 
@@ -58,6 +82,8 @@ const queryChain = (done) => {
 /** **Well Done !!**
 /* You completed these challenges, let's go celebrate !
  */
+
+module.exports = new Database()
 
 //----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
 
