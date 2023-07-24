@@ -2,6 +2,7 @@
 require('dotenv').config();
 const mongoose = require ('mongoose') 
 const URI = process.env.MONGO_URI
+mongoose.connect(`${URI}`, { useNewUrlParser: true, useUnifiedTopology: true})
 
 /*
 
@@ -11,23 +12,23 @@ statement because we only need a single connection to the database.
 
 */
 
-class Database {
-  constructor() {
-    this._connect();
-  }
+// class Database {
+//   constructor() {
+//     this._connect();
+//   }
 
-  _connect() {
-    mongoose
-      .connect(`${URI}`, { useNewUrlParser: true, useUnifiedTopology: true})
-      .then(() => {
-        console.log('Database connection successful');
-      })
-      .catch((err) => {
-        console.error('Database connection error');
-      });
-  }
-}
-module.exports = new Database()
+//   _connect() {
+//     mongoose
+//       .connect(`${URI}`, { useNewUrlParser: true, useUnifiedTopology: true})
+//       .then(() => {
+//         console.log('Database connection successful');
+//       })
+//       .catch((err) => {
+//         console.error('Database connection error');
+//       });
+//   }
+// }
+// module.exports = new Database()
 
 // creating a personSchema with the following shape:
 // a required name field of type Stirng
@@ -43,7 +44,7 @@ let personSchema = new mongoose.Schema({
     type: Number,
   },
   favoriteFoods: {
-    type: Array,
+    type: [String],
   }
 })
 let Person = mongoose.model('Person', personSchema)
